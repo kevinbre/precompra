@@ -17,7 +17,7 @@ function App() {
                 facingMode: "environment",
                 aspectRatio: { ideal: 16 / 9 },
                 noiseSuppression: true,
-                width: { ideal: 100 },
+                width: { ideal: 200 },
                 height: { ideal: 300 },
                 advanced: [
                     {
