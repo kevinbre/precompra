@@ -1,6 +1,5 @@
 import {FormEvent, useEffect, useState} from "react";
 import {toast} from "sonner";
-import {useZxing} from "react-zxing";
 
 import {DrawerScan} from "./components/drawer-scan";
 
@@ -72,14 +71,6 @@ function App() {
                             value={barCode}
                             onChange={(e) => setBarCode(e.currentTarget.value)}
                         />
-                        {/*  <div
-                            className={`max-w-96 max-h-60 overflow-hidden flex items-center justify-center relative border-2 ${
-                                scannedData ? "border-green-500" : ""
-                            }`}
-                        >
-                            <video ref={ref} />
-                            <div className="absolute h-1 w-full bg-red-500 top-0 botom-0 animate-line" />
-                        </div> */}
                         <DrawerScan
                             scannedData={scannedData}
                             setBarCode={setBarCode}
