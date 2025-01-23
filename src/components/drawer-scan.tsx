@@ -1,4 +1,4 @@
-import {forwardRef, PropsWithChildren} from "react";
+import {forwardRef, PropsWithChildren, useEffect} from "react";
 
 import {
     Drawer,
@@ -11,12 +11,21 @@ import {
     DrawerTrigger,
 } from "./ui/drawer";
 
-interface Props extends PropsWithChildren {
+interface Props {
     scannedData: any;
     trigger: React.ReactNode;
+    setPaused: (paused: boolean) => void;
 }
 
-export const DrawerScan = forwardRef<HTMLVideoElement, Props>(({scannedData, trigger}, ref) => {
+export const DrawerScan = forwardRef<HTMLVideoElement, Props>(({scannedData, setPaused, trigger}, ref) => {
+    useEffect(() => {
+        setPaused(false);
+
+        return () => {
+            setPaused(true);
+        };
+    }, [setPaused]);
+
     return (
         <Drawer>
             <DrawerTrigger>{trigger}</DrawerTrigger>
