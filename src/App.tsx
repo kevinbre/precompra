@@ -1,12 +1,19 @@
 import { FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { BarcodeScanner } from "react-barcode-scanner";
+import { useZxing } from "react-zxing";
 
 function App() {
     const [barCode, setBarCode] = useState("");
     const [data, setData] = useState<any | undefined>(undefined);
 
     const [scannedData, setScannedData] = useState("");
+
+    const { ref } = useZxing({
+        onDecodeResult(result) {
+            setScannedData(result.getText());
+        },
+    });
 
     console.log("DATA", scannedData);
 
@@ -59,12 +66,8 @@ function App() {
             ) : (
                 "Por favor busque un producto"
             )}
-            <BarcodeScanner
-                onCapture={(val) => {
-                    alert(val);
-                    setScannedData(val?.[0].rawValue);
-                }}
-            />
+            <video ref={ref} />
+            El resultado es: {scannedData}
             {/* <BarcodeScannerComponent delay={1500} height={500} width={500} onUpdate={handleScan} /> */}
             <form onSubmit={searchProduct}>
                 <input

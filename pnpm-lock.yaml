@@ -29,9 +29,15 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
+      react-native-camera:
+        specifier: ^4.2.1
+        version: 4.2.1
       react-qr-barcode-scanner:
         specifier: ^2.0.0
         version: 2.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-zxing:
+        specifier: ^2.0.2
+        version: 2.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       sonner:
         specifier: ^1.7.2
         version: 1.7.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -578,6 +584,10 @@ packages:
 
   '@xtuc/long@4.2.2':
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
+
+  '@zxing/library@0.20.0':
+    resolution: {integrity: sha512-6Ev6rcqVjMakZFIDvbUf0dtpPGeZMTfyxYg4HkVWioWeN7cRcnUWT3bU6sdohc82O1nPXcjq6WiGfXX2Pnit6A==}
+    engines: {node: '>= 10.4.0'}
 
   '@zxing/library@0.21.3':
     resolution: {integrity: sha512-hZHqFe2JyH/ZxviJZosZjV+2s6EDSY0O24R+FQmlWZBZXP9IqMo7S3nb3+2LBWxodJQkSurdQGnqE7KXqrYgow==}
@@ -2053,6 +2063,9 @@ packages:
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
+  react-native-camera@4.2.1:
+    resolution: {integrity: sha512-+Vkql24PFYQfsPRznJCvPwJQfyzCnjlcww/iZ4Ej80bgivKjL9eU0IMQIXp4yi6XCrKi4voWXxIDPMupQZKeIQ==}
+
   react-qr-barcode-scanner@2.0.0:
     resolution: {integrity: sha512-H+bjAi9ulYpW3RE3/I15CBkFQbQulkvFkyin1LO+cwEpbbZmRU/UQ+cDuvIdPpXXc1XvBT46uqYnHra7PMXgXw==}
     peerDependencies:
@@ -2068,6 +2081,13 @@ packages:
     peerDependencies:
       react: '>=16.2.0'
       react-dom: '>=16.2.0'
+
+  react-zxing@2.0.2:
+    resolution: {integrity: sha512-6TRXPL+QESjVQOCAZVRT2pUf/Fz3t4nPfbQLvNH42Dy9r/bu1rJq1I/lCUY+fK2Wg3mvLxPxym2AzzOM32mcmg==}
+    engines: {node: ^18 || ^20 || ^22, yarn: ^1.22}
+    peerDependencies:
+      react: ^16.8.0  || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0  || ^17.0.0 || ^18.0.0
 
   react@16.14.0:
     resolution: {integrity: sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==}
@@ -3127,6 +3147,12 @@ snapshots:
   '@xtuc/ieee754@1.2.0': {}
 
   '@xtuc/long@4.2.2': {}
+
+  '@zxing/library@0.20.0':
+    dependencies:
+      ts-custom-error: 3.3.1
+    optionalDependencies:
+      '@zxing/text-encoding': 0.9.0
 
   '@zxing/library@0.21.3':
     dependencies:
@@ -4765,6 +4791,10 @@ snapshots:
 
   react-is@16.13.1: {}
 
+  react-native-camera@4.2.1:
+    dependencies:
+      prop-types: 15.8.1
+
   react-qr-barcode-scanner@2.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@types/react': 18.3.18
@@ -4777,6 +4807,12 @@ snapshots:
 
   react-webcam@7.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
+  react-zxing@2.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@zxing/library': 0.20.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
