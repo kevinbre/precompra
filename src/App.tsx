@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useZxing } from "react-zxing";
-import { toast } from "sonner";
 
 function App() {
     const [barCode, setBarCode] = useState("");
@@ -12,9 +11,24 @@ function App() {
         onDecodeResult(result) {
             setScannedData(result.getText());
         },
+        timeBetweenDecodingAttempts: 1000,
+        constraints: {
+            video: {
+                facingMode: "environment",
+                aspectRatio: { ideal: 4 / 3 },
+                noiseSuppression: true,
+                width: { ideal: 300 },
+                height: { ideal: 100 },
+                advanced: [
+                    {
+                        echoCancellation: true,
+                        autoGainControl: true,
+                        displaySurface: "monitor",
+                    },
+                ],
+            },
+        },
     });
-
-    console.log("DATA", scannedData);
 
     const searchProduct = (event: FormEvent) => {
         event.preventDefault();
@@ -41,7 +55,6 @@ function App() {
 
     useEffect(() => {
         if (scannedData != undefined) {
-            toast.success("Result Scan: " + JSON.stringify(scannedData));
             alert("Result Scan: " + JSON.stringify(scannedData));
         }
     }, [scannedData]);
