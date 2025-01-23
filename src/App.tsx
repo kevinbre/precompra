@@ -7,8 +7,10 @@ function App() {
 
     const [scannedData, setScannedData] = useState(false);
 
+    const BarcodeSound = new Audio("./barcode.mp3");
     const { ref } = useZxing({
         onDecodeResult(result) {
+            BarcodeSound.play();
             setScannedData(true);
             setBarCode(result.getText());
         },
@@ -94,6 +96,7 @@ function App() {
                     className="p-2 rounded-md"
                     placeholder="Enter product id"
                     type="text"
+                    value={barCode}
                     onChange={(e) => setBarCode(e.currentTarget.value)}
                 />
                 <button type="submit">Buscar</button>
