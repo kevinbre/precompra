@@ -3,7 +3,7 @@ import BarcodeScannerComponent from "react-qr-barcode-scanner";
 
 function App() {
     const [barCode, setBarCode] = useState("");
-    const [data, setData] = useState<any[] | undefined>(undefined);
+    const [data, setData] = useState<any | undefined>(undefined);
 
     const [scannedData, setScannedData] = useState("");
 
@@ -55,7 +55,7 @@ function App() {
             <BarcodeScannerComponent
                 height={500}
                 width={500}
-                onUpdate={(err, result) => {
+                onUpdate={(_, result: any) => {
                     if (result) setBarCode(result.text);
                     else setScannedData("Not Found");
                 }}
