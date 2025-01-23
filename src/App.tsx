@@ -98,7 +98,9 @@ function App() {
                             value={barCode}
                             onChange={(e) => setBarCode(e.currentTarget.value)}
                         />
-                        <DrawerScan ref={ref} scannedData={scannedData} trigger={"Scanear"} />
+                        <DrawerScan scannedData={scannedData} trigger={"Scanear"}>
+                            <video ref={ref} />
+                        </DrawerScan>
                     </div>
                     <button type="submit">Buscar</button>
                 </form>

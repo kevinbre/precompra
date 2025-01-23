@@ -1,3 +1,5 @@
+import {PropsWithChildren} from "react";
+
 import {
     Drawer,
     DrawerClose,
@@ -9,13 +11,12 @@ import {
     DrawerTrigger,
 } from "./ui/drawer";
 
-interface Props {
+interface Props extends PropsWithChildren {
     scannedData: any;
-    ref: React.MutableRefObject<HTMLVideoElement | null>;
     trigger: React.ReactNode;
 }
 
-export function DrawerScan({scannedData, ref, trigger}: Props) {
+export function DrawerScan({scannedData, trigger, children}: Props) {
     return (
         <Drawer>
             <DrawerTrigger>{trigger}</DrawerTrigger>
@@ -29,7 +30,7 @@ export function DrawerScan({scannedData, ref, trigger}: Props) {
                                 scannedData ? "border-green-500" : ""
                             }`}
                         >
-                            <video ref={ref} />
+                            {children}
                             <div className="absolute h-1 w-full bg-red-500 top-0 botom-0 animate-line" />
                         </div>
                     </DrawerDescription>
