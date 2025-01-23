@@ -1,5 +1,6 @@
 import {FormEvent, useEffect, useState} from "react";
 import {toast} from "sonner";
+import {useZxing} from "react-zxing";
 
 import {DrawerScan} from "./components/drawer-scan";
 
@@ -8,6 +9,32 @@ function App() {
     const [data, setData] = useState<any | undefined>(undefined);
 
     const [scannedData, setScannedData] = useState(false);
+    const barcodeSound = new Audio("/barcode.mp3");
+
+    const {ref} = useZxing({
+        onDecodeResult(result) {
+            barcodeSound.play();
+            setScannedData(true);
+            setBarCode(result.getText());
+        },
+        timeBetweenDecodingAttempts: 1000,
+        constraints: {
+            video: {
+                facingMode: "environment",
+                aspectRatio: {ideal: 16 / 9},
+                noiseSuppression: true,
+                width: {ideal: 1920},
+                height: {ideal: 1080},
+                advanced: [
+                    {
+                        echoCancellation: true,
+                        autoGainControl: true,
+                        displaySurface: "monitor",
+                    },
+                ],
+            },
+        },
+    });
 
     const searchProduct = (event?: FormEvent) => {
         event?.preventDefault();
@@ -71,12 +98,7 @@ function App() {
                             value={barCode}
                             onChange={(e) => setBarCode(e.currentTarget.value)}
                         />
-                        <DrawerScan
-                            scannedData={scannedData}
-                            setBarCode={setBarCode}
-                            setScannedData={setScannedData}
-                            trigger={"Scanear"}
-                        />
+                        <DrawerScan ref={ref} scannedData={scannedData} trigger={"Scanear"} />
                     </div>
                     <button type="submit">Buscar</button>
                 </form>

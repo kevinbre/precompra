@@ -1,52 +1,21 @@
-import {useZxing} from "react-zxing";
-import {Dispatch, SetStateAction} from "react";
-
 import {
     Drawer,
-    DrawerTrigger,
+    DrawerClose,
     DrawerContent,
-    DrawerHeader,
-    DrawerTitle,
     DrawerDescription,
     DrawerFooter,
-    DrawerClose,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
 } from "./ui/drawer";
 
 interface Props {
     scannedData: any;
-    setScannedData: Dispatch<SetStateAction<boolean>>;
-    setBarCode: Dispatch<SetStateAction<string>>;
+    ref: React.MutableRefObject<HTMLVideoElement | null>;
     trigger: React.ReactNode;
 }
 
-export function DrawerScan({scannedData, setScannedData, setBarCode, trigger}: Props) {
-    const barcodeSound = new Audio("/barcode.mp3");
-
-    const {ref} = useZxing({
-        onDecodeResult(result) {
-            barcodeSound.play();
-            setScannedData(true);
-            setBarCode(result.getText());
-        },
-        timeBetweenDecodingAttempts: 1000,
-        constraints: {
-            video: {
-                facingMode: "environment",
-                aspectRatio: {ideal: 16 / 9},
-                noiseSuppression: true,
-                width: {ideal: 1920},
-                height: {ideal: 1080},
-                advanced: [
-                    {
-                        echoCancellation: true,
-                        autoGainControl: true,
-                        displaySurface: "monitor",
-                    },
-                ],
-            },
-        },
-    });
-
+export function DrawerScan({scannedData, ref, trigger}: Props) {
     return (
         <Drawer>
             <DrawerTrigger>{trigger}</DrawerTrigger>
