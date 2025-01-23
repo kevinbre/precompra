@@ -1,5 +1,4 @@
 import {FormEvent, useEffect, useState} from "react";
-import {useZxing} from "react-zxing";
 import {toast} from "sonner";
 
 import {DrawerScan} from "./components/drawer-scan";
