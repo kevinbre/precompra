@@ -7,7 +7,7 @@ function App() {
 
     const [scannedData, setScannedData] = useState(false);
 
-    const BarcodeSound = new Audio("./barcode.mp3");
+    const BarcodeSound = new Audio("/barcode.mp3");
     const { ref } = useZxing({
         onDecodeResult(result) {
             BarcodeSound.play();
