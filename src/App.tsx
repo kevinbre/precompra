@@ -5,11 +5,12 @@ function App() {
     const [barCode, setBarCode] = useState("");
     const [data, setData] = useState<any | undefined>(undefined);
 
-    const [scannedData, setScannedData] = useState("");
+    const [scannedData, setScannedData] = useState(false);
 
     const { ref } = useZxing({
         onDecodeResult(result) {
-            setScannedData(result.getText());
+            setScannedData(true);
+            setBarCode(result.getText());
         },
         timeBetweenDecodingAttempts: 1000,
         constraints: {
@@ -55,7 +56,9 @@ function App() {
 
     useEffect(() => {
         if (scannedData != undefined) {
-            alert("Result Scan: " + JSON.stringify(scannedData));
+            setTimeout(() => {
+                setScannedData(false);
+            }, 2000);
         }
     }, [scannedData]);
 
@@ -78,11 +81,14 @@ function App() {
             ) : (
                 "Por favor busque un producto"
             )}
-            <div className="max-w-96 max-h-60 overflow-hidden flex items-center justify-center">
+            <div
+                className={`max-w-96 max-h-60 overflow-hidden flex items-center justify-center relative border-2 ${scannedData ? "border-green-500" : ""
+                    }`}
+            >
                 <video ref={ref} />
+                <div className="absolute h-1 w-full bg-red-500 top-0 botom-0 animate-line" />
             </div>
-            El resultado es: {scannedData}
-            {/* <BarcodeScannerComponent delay={1500} height={500} width={500} onUpdate={handleScan} /> */}
+            El resultado es: {barCode}
             <form onSubmit={searchProduct}>
                 <input
                     className="p-2 rounded-md"
