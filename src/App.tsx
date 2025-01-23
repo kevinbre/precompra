@@ -37,7 +37,7 @@ function App() {
 
     useEffect(() => {
         if (scannedData != undefined) {
-            alert("Result Scan: " + JSON.stringify(scannedData));
+            toast.success("Result Scan: " + JSON.stringify(scannedData));
         }
     }, [scannedData]);
 
