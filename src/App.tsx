@@ -33,14 +33,13 @@ function App() {
             });
     };
 
-    const handleScan = (error: any, result: any) => {
+    const handleScan = (_: any, result: any) => {
         if (result) {
             setBarCode(result?.text);
 
             toast.success(`Product scanned: ${result?.text}`);
         } else {
             setScannedData("No result");
-            toast.error(`Error on scan: ${result?.text} ${error}`);
         }
     };
 
