@@ -1,5 +1,5 @@
 import Quagga from "@ericblade/quagga2";
-import React, { useEffect, useCallback } from "react";
+import { useCallback, useEffect } from "react";
 
 interface ScannerProps {
     onDetected: (result: any) => void;
