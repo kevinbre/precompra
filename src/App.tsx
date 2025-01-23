@@ -7,37 +7,8 @@ import {DrawerScan} from "./components/drawer-scan";
 function App() {
     const [barCode, setBarCode] = useState("");
     const [data, setData] = useState<any | undefined>(undefined);
-    const [paused, setPaused] = useState(true);
 
     const [scannedData, setScannedData] = useState(false);
-    const barcodeSound = new Audio("/barcode.mp3");
-
-    const {ref} = useZxing({
-        onDecodeResult(result) {
-            barcodeSound.play();
-            setScannedData(true);
-            setBarCode(result.getText());
-        },
-
-        timeBetweenDecodingAttempts: 1000,
-        paused: paused,
-        constraints: {
-            video: {
-                facingMode: "environment",
-                aspectRatio: {ideal: 16 / 9},
-                noiseSuppression: true,
-                width: {ideal: 1920},
-                height: {ideal: 1080},
-                advanced: [
-                    {
-                        echoCancellation: true,
-                        autoGainControl: true,
-                        displaySurface: "monitor",
-                    },
-                ],
-            },
-        },
-    });
 
     const searchProduct = (event?: FormEvent) => {
         event?.preventDefault();
@@ -109,7 +80,12 @@ function App() {
                             <video ref={ref} />
                             <div className="absolute h-1 w-full bg-red-500 top-0 botom-0 animate-line" />
                         </div> */}
-                        <DrawerScan ref={ref} scannedData={scannedData} setPaused={setPaused} trigger={"Scanear"} />
+                        <DrawerScan
+                            scannedData={scannedData}
+                            setBarCode={setBarCode}
+                            setScannedData={setScannedData}
+                            trigger={"Scanear"}
+                        />
                     </div>
                     <button type="submit">Buscar</button>
                 </form>

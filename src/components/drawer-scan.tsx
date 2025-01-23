@@ -1,4 +1,4 @@
-import {forwardRef, useEffect, useRef, useState} from "react";
+import {forwardRef, useEffect, useState} from "react";
 
 import {
     Drawer,
@@ -10,26 +10,14 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from "./ui/drawer";
+import {ZxingInfo, ZxingInfoProps} from "./zxing-info";
 
-interface Props {
-    scannedData: any;
+interface Props extends ZxingInfoProps {
     trigger: React.ReactNode;
-    setPaused: (paused: boolean) => void;
 }
 
-export const DrawerScan = forwardRef<HTMLVideoElement, Props>(({scannedData, setPaused, trigger}, ref) => {
+export function DrawerScan({scannedData, setBarCode, setScannedData, trigger}: Props) {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-    const videoRef = useRef<any>(null);
-
-    useEffect(() => {
-        if (isDrawerOpen && videoRef.current) {
-            videoRef.current = ref;
-            setPaused(false);
-        } else {
-            setPaused(true);
-        }
-    }, [isDrawerOpen, setPaused]);
 
     return (
         <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
@@ -39,20 +27,13 @@ export const DrawerScan = forwardRef<HTMLVideoElement, Props>(({scannedData, set
                     <DrawerTitle>Acerque un código de barras</DrawerTitle>
                     <DrawerDescription />
                 </DrawerHeader>
-                <div
-                    className={`max-w-96 max-h-60 overflow-hidden flex items-center justify-center relative border-2 ${
-                        scannedData ? "border-green-500" : ""
-                    }`}
-                >
-                    <video ref={videoRef} />
-                    <div className="absolute h-1 w-full bg-red-500 top-0 botom-0 animate-line" />
-                </div>
+                <ZxingInfo scannedData={scannedData} setBarCode={setBarCode} setScannedData={setScannedData} />
                 <DrawerFooter>
                     <DrawerClose />
                 </DrawerFooter>
             </DrawerContent>
         </Drawer>
     );
-});
+}
 
 DrawerScan.displayName = "DrawerScan";
