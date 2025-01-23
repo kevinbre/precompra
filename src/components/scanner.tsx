@@ -19,8 +19,8 @@ export function Scanner({ onDetected }: ScannerProps) {
                 inputStream: {
                     type: "LiveStream",
                     constraints: {
-                        width: 640,
-                        height: 480,
+                        width: 500,
+                        height: 250,
                         facingMode: "environment", // or user
                     },
                 },
@@ -30,7 +30,21 @@ export function Scanner({ onDetected }: ScannerProps) {
                 },
                 numOfWorkers: 4,
                 decoder: {
-                    readers: ["ean_reader"],
+                    readers: [
+                        "ean_reader",
+                        "ean_2_reader",
+                        "ean_5_reader",
+                        "ean_8_reader",
+                        "code_39_reader",
+                        "code_39_vin_reader",
+                        "codabar_reader",
+                        "upc_reader",
+                        "upc_e_reader",
+                        "i2of5_reader",
+                        "2of5_reader",
+                        "code_93_reader",
+                        "code_128_reader",
+                    ],
                 },
                 locate: true,
             },
