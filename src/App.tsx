@@ -17,8 +17,8 @@ function App() {
                 facingMode: "environment",
                 aspectRatio: { ideal: 16 / 9 },
                 noiseSuppression: true,
-                width: { ideal: 1280 }, // Aumentar resolución
-                height: { ideal: 720 },
+                width: { ideal: 1920 },
+                height: { ideal: 1080 },
                 advanced: [
                     {
                         echoCancellation: true,
