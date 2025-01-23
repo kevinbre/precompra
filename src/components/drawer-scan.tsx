@@ -1,4 +1,4 @@
-import {forwardRef, PropsWithChildren, useEffect} from "react";
+import {forwardRef, useEffect} from "react";
 
 import {
     Drawer,
