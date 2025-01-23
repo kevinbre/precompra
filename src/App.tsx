@@ -1,6 +1,8 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import BarcodeScannerComponent from "react-qr-barcode-scanner";
 import { toast } from "sonner";
+
+import { Scanner } from "./components/scanner";
 
 function App() {
     const [barCode, setBarCode] = useState("");
@@ -33,6 +35,12 @@ function App() {
             });
     };
 
+    useEffect(() => {
+        if (scannedData != undefined) {
+            alert("Result Scan: " + JSON.stringify(scannedData));
+        }
+    }, [scannedData]);
+
     return (
         <div className="w-screen min-h-[100dvh] bg-neutral-950 text-gray-300 flex flex-col justify-center items-center p-6">
             {data ? (
@@ -52,7 +60,7 @@ function App() {
             ) : (
                 "Por favor busque un producto"
             )}
-            <BarcodeScannerComponent
+            {/*  <BarcodeScannerComponent
                 height={500}
                 width={500}
                 onUpdate={(_, result: any) => {
@@ -63,7 +71,9 @@ function App() {
                         setScannedData("Not Found");
                     }
                 }}
-            />
+            /> */}
+
+            <Scanner onDetected={setScannedData} />
             {/* <BarcodeScannerComponent delay={1500} height={500} width={500} onUpdate={handleScan} /> */}
             <form onSubmit={searchProduct}>
                 <input
