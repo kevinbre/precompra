@@ -1,7 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
-import { toast } from "sonner";
-import { BarcodeScanner } from "react-barcode-scanner";
 import { useZxing } from "react-zxing";
+import { toast } from "sonner";
 
 function App() {
     const [barCode, setBarCode] = useState("");
