@@ -40,7 +40,7 @@ function App() {
             toast.success(`Product scanned: ${result?.text}`);
         } else {
             setScannedData("No result");
-            toast.error(`Error on scan: ${result?.text}`);
+            toast.error(`Error on scan: ${result?.text} ${error}`);
         }
     };
 
