@@ -17,8 +17,8 @@ function App() {
                 facingMode: "environment",
                 aspectRatio: { ideal: 16 / 9 },
                 noiseSuppression: true,
-                width: { ideal: 200 },
-                height: { ideal: 300 },
+                width: { ideal: 1280 }, // Aumentar resolución
+                height: { ideal: 720 },
                 advanced: [
                     {
                         echoCancellation: true,
@@ -78,7 +78,9 @@ function App() {
             ) : (
                 "Por favor busque un producto"
             )}
-            <video ref={ref} />
+            <div className="max-w-96 max-h-60 overflow-hidden flex items-center justify-center">
+                <video ref={ref} />
+            </div>
             El resultado es: {scannedData}
             {/* <BarcodeScannerComponent delay={1500} height={500} width={500} onUpdate={handleScan} /> */}
             <form onSubmit={searchProduct}>
