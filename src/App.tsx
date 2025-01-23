@@ -33,7 +33,7 @@ function App() {
             });
     };
 
-    const handleScan = (_: any, result: any) => {
+    const handleScan = (error: any, result: any) => {
         if (result) {
             setBarCode(result?.text);
 
