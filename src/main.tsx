@@ -1,7 +1,7 @@
 import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Toaster } from "sonner";
+import {Toaster} from "sonner";
 
 import App from "./App";
 

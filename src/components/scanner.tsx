@@ -1,11 +1,11 @@
 import Quagga from "@ericblade/quagga2";
-import { useCallback, useEffect } from "react";
+import {useCallback, useEffect} from "react";
 
 interface ScannerProps {
     onDetected: (result: any) => void;
 }
 
-export function Scanner({ onDetected }: ScannerProps) {
+export function Scanner({onDetected}: ScannerProps) {
     const _onDetected = useCallback(
         (result: any) => {
             onDetected(result);
