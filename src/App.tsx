@@ -98,17 +98,15 @@ function App() {
                             value={barCode}
                             onChange={(e) => setBarCode(e.currentTarget.value)}
                         />
-                        <div
+                        {/*  <div
                             className={`max-w-96 max-h-60 overflow-hidden flex items-center justify-center relative border-2 ${
                                 scannedData ? "border-green-500" : ""
                             }`}
                         >
                             <video ref={ref} />
                             <div className="absolute h-1 w-full bg-red-500 top-0 botom-0 animate-line" />
-                        </div>
-                        <DrawerScan scannedData={scannedData} trigger={"Scanear"}>
-                            <video ref={ref} />
-                        </DrawerScan>
+                        </div> */}
+                        <DrawerScan ref={ref} scannedData={scannedData} trigger={"Scanear"} />
                     </div>
                     <button type="submit">Buscar</button>
                 </form>

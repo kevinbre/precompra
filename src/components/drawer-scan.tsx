@@ -1,4 +1,4 @@
-import {PropsWithChildren} from "react";
+import {forwardRef, PropsWithChildren} from "react";
 
 import {
     Drawer,
@@ -16,7 +16,7 @@ interface Props extends PropsWithChildren {
     trigger: React.ReactNode;
 }
 
-export function DrawerScan({scannedData, trigger, children}: Props) {
+export const DrawerScan = forwardRef<HTMLVideoElement, Props>(({scannedData, trigger}, ref) => {
     return (
         <Drawer>
             <DrawerTrigger>{trigger}</DrawerTrigger>
@@ -30,7 +30,7 @@ export function DrawerScan({scannedData, trigger, children}: Props) {
                                 scannedData ? "border-green-500" : ""
                             }`}
                         >
-                            {children}
+                            <video ref={ref} />
                             <div className="absolute h-1 w-full bg-red-500 top-0 botom-0 animate-line" />
                         </div>
                     </DrawerDescription>
@@ -41,4 +41,6 @@ export function DrawerScan({scannedData, trigger, children}: Props) {
             </DrawerContent>
         </Drawer>
     );
-}
+});
+
+DrawerScan.displayName = "DrawerScan";
