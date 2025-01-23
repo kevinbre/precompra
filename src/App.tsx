@@ -2,8 +2,6 @@ import { FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { BarcodeScanner } from "react-barcode-scanner";
 
-import { Scanner } from "./components/scanner";
-
 function App() {
     const [barCode, setBarCode] = useState("");
     const [data, setData] = useState<any | undefined>(undefined);
@@ -64,6 +62,7 @@ function App() {
             <BarcodeScanner
                 onCapture={(val) => {
                     alert(val);
+                    setScannedData(val?.[0].rawValue);
                 }}
             />
             {/* <BarcodeScannerComponent delay={1500} height={500} width={500} onUpdate={handleScan} /> */}
