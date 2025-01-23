@@ -1,4 +1,4 @@
-import {forwardRef, useEffect} from "react";
+import {forwardRef, useEffect, useRef, useState} from "react";
 
 import {
     Drawer,
@@ -18,16 +18,21 @@ interface Props {
 }
 
 export const DrawerScan = forwardRef<HTMLVideoElement, Props>(({scannedData, setPaused, trigger}, ref) => {
-    useEffect(() => {
-        setPaused(false);
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-        return () => {
+    const videoRef = useRef<any>(null);
+
+    useEffect(() => {
+        if (isDrawerOpen && videoRef.current) {
+            videoRef.current = ref;
+            setPaused(false);
+        } else {
             setPaused(true);
-        };
-    }, [setPaused]);
+        }
+    }, [isDrawerOpen, setPaused]);
 
     return (
-        <Drawer>
+        <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
             <DrawerTrigger>{trigger}</DrawerTrigger>{" "}
             <DrawerContent>
                 <DrawerHeader>
@@ -39,7 +44,7 @@ export const DrawerScan = forwardRef<HTMLVideoElement, Props>(({scannedData, set
                         scannedData ? "border-green-500" : ""
                     }`}
                 >
-                    <video ref={ref} />
+                    <video ref={videoRef} />
                     <div className="absolute h-1 w-full bg-red-500 top-0 botom-0 animate-line" />
                 </div>
                 <DrawerFooter>

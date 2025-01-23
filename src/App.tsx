@@ -18,6 +18,7 @@ function App() {
             setScannedData(true);
             setBarCode(result.getText());
         },
+
         timeBetweenDecodingAttempts: 1000,
         paused: paused,
         constraints: {
