@@ -15,10 +15,10 @@ function App() {
         constraints: {
             video: {
                 facingMode: "environment",
-                aspectRatio: { ideal: 4 / 3 },
+                aspectRatio: { ideal: 16 / 9 },
                 noiseSuppression: true,
-                width: { ideal: 300 },
-                height: { ideal: 100 },
+                width: { ideal: 100 },
+                height: { ideal: 300 },
                 advanced: [
                     {
                         echoCancellation: true,
