@@ -1,87 +1,18 @@
-import {FormEvent, useEffect, useState} from "react";
-import {toast} from "sonner";
+import {Route, Routes} from "react-router-dom";
 
-import {DrawerScan} from "./components/drawer-scan";
+import {SearchProducts} from "./pages/search-products";
+
+import {Layout} from "@/components/layout/layout";
+import {Home} from "@/pages/home";
 
 function App() {
-    const [barCode, setBarCode] = useState("");
-    const [data, setData] = useState<any | undefined>(undefined);
-
-    const [scannedData, setScannedData] = useState(false);
-
-    const searchProduct = (event?: FormEvent) => {
-        event?.preventDefault();
-        fetch(
-            `https://st.dynamicyield.com/spa/json?sec=8781555&ctx=%7B%22type%22%3A%22PRODUCT%22%2C%22data%22%3A%5B%22${barCode}%22%5D%2C%22lng%22%3A%22carrefourar0268%22%7D`,
-        )
-            .then((res) => res.json())
-            .then((res) => {
-                fetch(
-                    `https://www.carrefour.com.ar/api/catalog_system/pub/products/search?fq=productName:${res?.feedProperties?.name?.replaceAll?.(
-                        ".",
-                        "",
-                    )}`,
-                )
-                    .then((res) => res.json())
-                    .then((res) => {
-                        setData(res[0]);
-                    });
-            })
-            .catch((err) => {
-                toast.error(err);
-            });
-    };
-
-    useEffect(() => {
-        if (scannedData) {
-            searchProduct();
-            setTimeout(() => {
-                setScannedData(false);
-            }, 2000);
-        }
-    }, [scannedData]);
-
     return (
-        <>
-            <div className="w-screen min-h-[100dvh] bg-neutral-950 text-gray-300 flex flex-col justify-center items-center p-6">
-                {data ? (
-                    <>
-                        <div className="flex flex-col items-center justify-center gap-4">
-                            <h2>Scaneo el producto</h2>
-                            {data?.items?.map((item: any) => item.name)}
-                            {data?.items?.map((item: any) => (
-                                <img key={item.itemId} alt={item.name} src={item?.images?.[0]?.imageUrl} width={200} />
-                            ))}
-                        </div>
-                        <div>
-                            El precio es de: $
-                            <strong>{data?.items?.[0]?.sellers?.[0]?.commertialOffer?.Installments?.[0]?.Value}</strong>
-                        </div>
-                    </>
-                ) : (
-                    "Por favor busque un producto"
-                )}
-                El resultado es: {barCode}
-                <form className="flex flex-col gap-4 justify-center items-center" onSubmit={searchProduct}>
-                    <div className="flex gap-4 items-center">
-                        <input
-                            className="p-2 rounded-md"
-                            placeholder="Enter product id"
-                            type="text"
-                            value={barCode}
-                            onChange={(e) => setBarCode(e.currentTarget.value)}
-                        />
-                        <DrawerScan
-                            scannedData={scannedData}
-                            setBarCode={setBarCode}
-                            setScannedData={setScannedData}
-                            trigger={"Scanear"}
-                        />
-                    </div>
-                    <button type="submit">Buscar</button>
-                </form>
-            </div>
-        </>
+        <Routes>
+            <Route element={<Layout />}>
+                <Route element={<Home />} path="/" />
+                <Route element={<SearchProducts />} path="/searchProducts" />
+            </Route>
+        </Routes>
     );
 }
 

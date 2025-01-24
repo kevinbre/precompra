@@ -21,8 +21,8 @@ export function DrawerScan({scannedData, setBarCode, setScannedData, trigger}: P
 
     return (
         <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
-            <DrawerTrigger>{trigger}</DrawerTrigger>{" "}
-            <DrawerContent>
+            <DrawerTrigger>{trigger}</DrawerTrigger>
+            <DrawerContent className="flex items-center justify-center gap-6 flex-col">
                 <DrawerHeader>
                     <DrawerTitle>Acerque un código de barras</DrawerTitle>
                     <DrawerDescription />
