@@ -1,5 +1,5 @@
 import {ShoppingCart, Trash} from "lucide-react";
-import {useEffect} from "react";
+import {useEffect, useMemo} from "react";
 
 import {
     Drawer,
@@ -27,7 +27,12 @@ export function DrawerCart() {
         <div className="max-h-[100dvh]">
             <Drawer direction="left">
                 <DrawerTrigger>
-                    <ShoppingCart />
+                    <div className="relative">
+                        <div className="absolute w-4 h-4 text-xs bg-red-500 -top-2 -right-2 rounded-full flex items-center justify-center">
+                            {cart.length}
+                        </div>
+                        <ShoppingCart />
+                    </div>
                 </DrawerTrigger>
                 <DrawerContent className="max-w-80 h-full max-h-[100dvh]" lineClassName="w-0">
                     <DrawerHeader className="flex items-center justify-start gap-6 flex-col h-full">
