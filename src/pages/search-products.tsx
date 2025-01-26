@@ -1,9 +1,10 @@
 import {Barcode, ScanBarcode} from "lucide-react";
-import {FormEvent, useEffect, useState} from "react";
+import {FormEvent, useEffect, useMemo, useState} from "react";
 import {toast} from "sonner";
 
 import {DrawerScan} from "@/components/drawer-scan";
 import {Input} from "@/components/ui/input";
+import {Product, useCart} from "@/store/useCart";
 
 const CARREFOUR_API_PRODUCT_NAME =
     "https://www.carrefour.com.ar/api/catalog_system/pub/products/search?fq=productName:";
@@ -15,8 +16,11 @@ const getProductInfo = (code: string) =>
 
 export function SearchProducts() {
     const [barCode, setBarCode] = useState("");
-    const [data, setData] = useState<any | undefined>(undefined);
+    const [data, setData] = useState<Product | undefined>(undefined);
     const [scannedData, setScannedData] = useState(false);
+
+    const addToCart = useCart((state) => state.addToCart);
+    const cart = useCart((state) => state.cart);
 
     const store = "Carrefour";
 
@@ -31,15 +35,20 @@ export function SearchProducts() {
                         const items = data.find((item: any) => item.EAN[0] === barCode);
 
                         if (!items) return;
-                        fetch(
-                            `${CARREFOUR_API_PRODUCT_ID}${items?.productId}&geoCoordinates=-58.98713;-27.43824&sc=1&country=ARG`,
-                        )
+                        fetch(`${CARREFOUR_API_PRODUCT_ID}${items?.productId}`)
                             .then((res) => res.json())
                             .then((idItems) => {
                                 const finalItems = idItems.find((finalItem: any) => finalItem.EAN[0] === barCode);
 
-                                console.log(finalItems);
-                                setData(finalItems);
+                                setData({
+                                    id: finalItems?.items?.[0]?.itemId,
+                                    name: finalItems?.items?.[0]?.name,
+                                    price: finalItems?.items?.[0]?.sellers?.[0]?.commertialOffer?.Price,
+                                    priceWithoutDiscount:
+                                        finalItems?.items?.[0]?.sellers?.[0]?.commertialOffer?.PriceWithoutDiscount,
+                                    image: finalItems?.items?.[0]?.images?.[0]?.imageUrl,
+                                    pricePerUnit: finalItems?.["Precio x unidad"][0],
+                                });
                             });
                     });
             })
@@ -47,6 +56,12 @@ export function SearchProducts() {
                 toast.error(err);
             });
     };
+
+    const quantity = useMemo(() => {
+        const item = cart.find((item) => item?.id === data?.id);
+
+        return item?.quantity ?? 0;
+    }, [cart, data?.id]);
 
     useEffect(() => {
         if (scannedData) {
@@ -57,8 +72,6 @@ export function SearchProducts() {
         }
     }, [scannedData]);
 
-    console.log(data?.items);
-
     return (
         <div className="flex flex-col justify-between h-full">
             <div className="h-full">
@@ -66,24 +79,25 @@ export function SearchProducts() {
                     <>
                         <div className="flex flex-col items-center justify-center gap-4">
                             <h2 className="text-xl font-semibold">Productos {store}</h2>
-                            {data?.items?.map((item: any) => {
-                                return (
-                                    <div key={item.itemId}>
-                                        <img alt={item.name} src={item?.images?.[0]?.imageUrl} width={200} />
-                                    </div>
-                                );
-                            })}
-                            <span>{data?.["Precio x unidad"][0]}</span>
+
+                            <div key={data.id}>
+                                <img alt={data.name} src={data?.image} width={200} />
+                            </div>
+
+                            <span>{data.pricePerUnit}</span>
                         </div>
                         <div className="flex flex-col gap-2">
-                            <h4>{data?.items?.map((item: any) => item.name)}</h4>
-                            <span className="text-blue-500 line-through">
-                                ${data?.items?.[0]?.sellers?.[0]?.commertialOffer?.PriceWithoutDiscount}
-                            </span>
-                            <span className="text-red-500">
-                                ${data?.items?.[0]?.sellers?.[0]?.commertialOffer?.Price}
-                            </span>
+                            <h4>{data?.name}</h4>
+                            <span className="text-blue-500 line-through">${data?.priceWithoutDiscount}</span>
+                            <span className="text-red-500">${data?.price}</span>
                         </div>
+                        <button
+                            onClick={() => {
+                                addToCart(data);
+                            }}
+                        >
+                            Agregar al carrito {quantity ? `(${quantity})` : ""}
+                        </button>
                     </>
                 ) : (
                     "Por favor busque un producto"
