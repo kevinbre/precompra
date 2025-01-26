@@ -1,5 +1,5 @@
 import {ShoppingCart, Trash} from "lucide-react";
-import {useEffect, useMemo} from "react";
+import {useEffect} from "react";
 
 import {
     Drawer,
