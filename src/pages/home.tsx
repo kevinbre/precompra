@@ -5,7 +5,7 @@ export function Home() {
         <>
             <h1>Elegir super</h1>
             <Link to="/searchProducts">
-                <img alt="Carrefour Logo" className="w-56" src="./src/assets/carrefour-logo.png" />
+                <img alt="Carrefour Logo" className="w-56" src="/carrefour-logo.png" />
             </Link>
         </>
     );
